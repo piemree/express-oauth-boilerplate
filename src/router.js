@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const logger = require("./helpers/logger.js");
 const Rooms = require("./Rooms/Room.controller.js");
-const Users = require("./User/User.controller");
+const UserRouter = require("./User/User.controller");
 
 router.use(function timeLog(req, res, next) {
   logger.log("Time: ", Date.now());
@@ -10,10 +10,14 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", function (req, res) {
-  res.send("Home");
+  const clientObj = {
+    username: "emole",
+    email: "q@q.com",
+  };
+  res.render("login", clientObj);
 });
 
-router.use("/users", Users);
+router.use("/users", UserRouter);
 router.use("/rooms", Rooms);
 
 module.exports = router;
