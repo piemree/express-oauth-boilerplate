@@ -7,10 +7,11 @@ var UserDao = {
   findById: findById,
   deleteById: deleteById,
   updateUser: updateUser,
+  findByUsername: findByUsername,
 };
 
 async function findAll() {
-  const results = await User.sequelize.query('SELECT * FROM "Users"', {
+  const results = await db.query('SELECT * FROM "Users"', {
     type: QueryTypes.SELECT,
   });
 
@@ -18,8 +19,15 @@ async function findAll() {
 }
 
 async function findById(id) {
-  const result = await User.sequelize.query(
-    `SELECT * FROM "Users" WHERE id = ${id}`,
+  const result = await db.query(`SELECT * FROM "Users" WHERE id = ${id}`, {
+    type: QueryTypes.SELECT,
+  });
+  return result;
+}
+
+async function findByUsername(username) {
+  const result = await db.query(
+    `SELECT * FROM "Users" WHERE username = ${username}`,
     {
       type: QueryTypes.SELECT,
     }
@@ -27,13 +35,21 @@ async function findById(id) {
   return result;
 }
 
-function deleteById(id) {
-  return User.destroy({ where: { id: id } });
+async function deleteById(id) {
+  const result = await db.query(`DELETE * FROM "Users" WHERE id = ${id}`, {
+    type: QueryTypes.DELETE,
+  });
+  return result;
 }
 
-function create(user) {
-  var newUser = new User(user);
-  return newUser.save();
+async function create(user) {
+  const result = await db.query(
+    `INSERT INTO "Users" ("username","email") VALUES ('${user.username}', '${user.email}')`,
+    {
+      type: QueryTypes.INSERT,
+    }
+  );
+  return result;
 }
 
 function updateUser(user, id) {
