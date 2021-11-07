@@ -27,7 +27,7 @@ async function findById(id) {
 
 async function findByUsername(username) {
   const result = await db.query(
-    `SELECT * FROM "Users" WHERE username = ${username}`,
+    `SELECT * FROM "Users" WHERE username = '${username}'`,
     {
       type: QueryTypes.SELECT,
     }
@@ -44,7 +44,7 @@ async function deleteById(id) {
 
 async function create(user) {
   const result = await db.query(
-    `INSERT INTO "Users" ("username","email") VALUES ('${user.username}', '${user.email}')`,
+    `INSERT INTO "Users" ("username","password") VALUES ('${user.username}', '${user.password}')`,
     {
       type: QueryTypes.INSERT,
     }
@@ -55,7 +55,6 @@ async function create(user) {
 function updateUser(user, id) {
   const updateUser = {
     username: user.username,
-    email: user.email,
   };
   return User.update(updateUser, { where: { id: id } });
 }

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports.PostgreConfig = {
   host: "localhost",
   dialect: "postgres",
@@ -11,3 +13,5 @@ module.exports.PostgreConfig = {
     idle: 10000,
   },
 };
+
+module.exports.JwtPrivateKey = process.env.JWT_PRIVATE_KEY || "secret";

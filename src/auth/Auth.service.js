@@ -1,22 +1,20 @@
-const { findById } = require("../User/User.service");
+const { findByUsername } = require("../User/User.service");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_PRIVATE_KEY || "secret";
+const { JwtPrivateKey } = require("../../configs");
 const expiresIn = 36000;
 
-module.exports.generateTokenAndSetCooike = async (req) => {
-  const jwtToken = jwt.sign(req.user, jwtSecret, { expiresIn: expiresIn });
-  req.cookie("token", jwtToken, { expire: expiresIn + Date.now() });
+module.exports.generateToken = async (user) => {
+  return jwt.sign(JSON.stringify(user), JwtPrivateKey);
 };
 
-module.exports.verifyToken = (token) => {
+module.exports.checkUserAndCreateToken = async (user) => {
+  const usr = await findByUsername(user.username);
+  if (!usr) return false;
   try {
-    return jwt.verify(token, jwtSecret);
+    await bcrypt.compare(user.password, usr.password);
   } catch (error) {
     return false;
   }
-  return;
-};
-
-module.exports.isUserExists = (req) => {
-  findById;
+  return jwt.sign(user, JwtPrivateKey);
 };

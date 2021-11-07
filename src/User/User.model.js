@@ -8,12 +8,19 @@ const User = db.define("Users", {
     autoIncrement: true,
   },
   username: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: false,
   },
   email: {
+    type: Sequelize.STRING(50),
+    allowNull: false,
+  },
+  password: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      len: [6, 16],
+    },
   },
 });
 

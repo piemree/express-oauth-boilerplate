@@ -1,17 +1,14 @@
 const { Sequelize } = require("sequelize");
-const { PostgreConfig } = require("../../configs/dbConfig");
+const { PostgreConfig } = require("../../configs");
 
 const db = new Sequelize("chatdb", "postgres", "202020", PostgreConfig);
 
-function authenticate() {
-  return db
-    .authenticate()
-    .then(() => {
-      console.log("Database connected...");
-    })
-    .catch((err) => {
-      console.log("Error: " + err);
-    });
+async function authenticate() {
+  try {
+    return await db.authenticate();
+  } catch (err) {
+    console.log("Error: " + err);
+  }
 }
 
 module.exports = { db, authenticate };
