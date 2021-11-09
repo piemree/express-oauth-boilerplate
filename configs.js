@@ -15,3 +15,8 @@ module.exports.PostgreConfig = {
 };
 
 module.exports.JwtPrivateKey = process.env.JWT_PRIVATE_KEY || "secret";
+
+module.exports.GoogleKeys = {
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+};
