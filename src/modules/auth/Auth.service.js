@@ -1,4 +1,4 @@
-const { findByUsername } = require("../User/User.service");
+const { findByUsername } = require("../user/User.service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JwtPrivateKey } = require("../../configs");

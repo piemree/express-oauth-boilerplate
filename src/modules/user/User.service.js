@@ -1,5 +1,5 @@
 const User = require("./User.model");
-const { db } = require("../database/db");
+const { db } = require("../../database/db");
 const { QueryTypes } = require("sequelize");
 var UserDao = {
   findAll: findAll,
@@ -11,7 +11,7 @@ var UserDao = {
 };
 
 async function findAll() {
-  const results = await db.query('SELECT * FROM "Users"', {
+  const results = await db.query('SELECT * FROM "users"', {
     type: QueryTypes.SELECT,
   });
 
@@ -19,7 +19,7 @@ async function findAll() {
 }
 
 async function findById(id) {
-  const result = await db.query(`SELECT * FROM "Users" WHERE id = ${id}`, {
+  const result = await db.query(`SELECT * FROM "users" WHERE id = ${id}`, {
     type: QueryTypes.SELECT,
   });
   return result;
@@ -27,7 +27,7 @@ async function findById(id) {
 
 async function findByUsername(username) {
   const result = await db.query(
-    `SELECT * FROM "Users" WHERE username = '${username}'`,
+    `SELECT * FROM "users" WHERE username = '${username}'`,
     {
       type: QueryTypes.SELECT,
     }
@@ -36,7 +36,7 @@ async function findByUsername(username) {
 }
 
 async function deleteById(id) {
-  const result = await db.query(`DELETE * FROM "Users" WHERE id = ${id}`, {
+  const result = await db.query(`DELETE * FROM "users" WHERE id = ${id}`, {
     type: QueryTypes.DELETE,
   });
   return result;
@@ -44,7 +44,7 @@ async function deleteById(id) {
 
 async function create(user) {
   const result = await db.query(
-    `INSERT INTO "Users" ("username","password") VALUES ('${user.username}', '${user.password}')`,
+    `INSERT INTO "users" ("username","password") VALUES ('${user.username}', '${user.password}')`,
     {
       type: QueryTypes.INSERT,
     }

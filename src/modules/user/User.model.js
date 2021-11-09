@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const { db } = require("../database/db");
+const { db } = require("../../database/db");
 
-const User = db.define("Users", {
+const User = db.define("users", {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -9,18 +9,19 @@ const User = db.define("Users", {
   },
   username: {
     type: Sequelize.STRING(50),
-    allowNull: false,
+    allowNull: true,
   },
-  email: {
+  googleId: {
     type: Sequelize.STRING(50),
-    allowNull: false,
+    allowNull: true,
   },
-  password: {
+  twitterId: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      len: [6, 16],
-    },
+    allowNull: true,
+  },
+  githubId: {
+    type: Sequelize.STRING,
+    allowNull: true,
   },
 });
 
