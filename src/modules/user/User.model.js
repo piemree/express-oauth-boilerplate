@@ -12,7 +12,7 @@ const User = db.define("users", {
     allowNull: true,
   },
   googleId: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING,
     allowNull: true,
   },
   twitterId: {
@@ -20,6 +20,14 @@ const User = db.define("users", {
     allowNull: true,
   },
   githubId: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+  email: {
     type: Sequelize.STRING,
     allowNull: true,
   },

@@ -6,7 +6,7 @@ const ProtectedRoute = require("./middleware/ProtectedRoute");
 
 router.use("/auth", AuthController);
 
-router.use("/users", ProtectedRoute, UserRouter);
+router.use("/users", UserRouter);
 
 router.get("/me", ProtectedRoute, (req, res) => res.json(req.user));
 

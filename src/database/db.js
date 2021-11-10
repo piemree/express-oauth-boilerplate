@@ -1,7 +1,12 @@
 const { Sequelize } = require("sequelize");
-const { PostgreConfig } = require("../../configs");
+const { DatabseConfig, DataBaseCredentials } = require("../configs");
 
-const db = new Sequelize("chatdb", "postgres", "202020", PostgreConfig);
+const db = new Sequelize(
+  DataBaseCredentials.database,
+  DataBaseCredentials.username,
+  DataBaseCredentials.password,
+  DatabseConfig
+);
 
 async function authenticate() {
   try {

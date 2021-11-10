@@ -1,5 +1,5 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const { GoogleKeys } = require("../../../../configs");
+const { GoogleKeys } = require("../../../configs");
 const passport = require("passport");
 const User = require("../../user/User.model");
 
@@ -18,6 +18,7 @@ passport.use(
         const newUser = await User.create({
           googleId: profile.id,
           username: profile._json.email.split("@")[0],
+          email: profile._json.email,
         });
         return cb(null, newUser);
       } catch (error) {

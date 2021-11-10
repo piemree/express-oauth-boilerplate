@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-module.exports.PostgreConfig = {
+module.exports.DatabseConfig = {
   host: "localhost",
   dialect: "postgres",
   define: {
@@ -12,6 +12,11 @@ module.exports.PostgreConfig = {
     acquire: 30000,
     idle: 10000,
   },
+};
+module.exports.DataBaseCredentials = {
+  database: process.env.DATABASE_NAME,
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
 };
 
 module.exports.JwtPrivateKey = process.env.JWT_PRIVATE_KEY || "secret";

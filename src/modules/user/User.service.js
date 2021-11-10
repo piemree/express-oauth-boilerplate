@@ -1,55 +1,33 @@
 const User = require("./User.model");
-const { db } = require("../../database/db");
-const { QueryTypes } = require("sequelize");
-var UserDao = {
-  findAll: findAll,
-  create: create,
-  findById: findById,
-  deleteById: deleteById,
-  updateUser: updateUser,
-  findByUsername: findByUsername,
-};
+const { hashedPassword, isRightPassword } = require("../../utils/bcrypt");
 
 async function findAll() {
-  const results = await db.query('SELECT * FROM "users"', {
-    type: QueryTypes.SELECT,
-  });
-
-  return results;
+  return await User.findAll();
 }
 
 async function findById(id) {
-  const result = await db.query(`SELECT * FROM "users" WHERE id = ${id}`, {
-    type: QueryTypes.SELECT,
-  });
-  return result;
+  return await User.findByPk(id);
 }
 
 async function findByUsername(username) {
-  const result = await db.query(
-    `SELECT * FROM "users" WHERE username = '${username}'`,
-    {
-      type: QueryTypes.SELECT,
-    }
-  );
-  return result;
+  return await User.findOne({ where: { username: username } });
+}
+
+async function findByEmail(email) {
+  return await User.findOne({ where: { email: email } });
 }
 
 async function deleteById(id) {
-  const result = await db.query(`DELETE * FROM "users" WHERE id = ${id}`, {
-    type: QueryTypes.DELETE,
-  });
-  return result;
+  return await User.destroy({ where: { id: id } });
 }
 
-async function create(user) {
-  const result = await db.query(
-    `INSERT INTO "users" ("username","password") VALUES ('${user.username}', '${user.password}')`,
-    {
-      type: QueryTypes.INSERT,
-    }
-  );
-  return result;
+async function create(username, email, password) {
+  const newUser = {
+    username: username,
+    email: email,
+    password: await hashedPassword(password),
+  };
+  return await User.create(newUser);
 }
 
 function updateUser(user, id) {
@@ -58,4 +36,27 @@ function updateUser(user, id) {
   };
   return User.update(updateUser, { where: { id: id } });
 }
+
+async function login(email, password) {
+  try {
+    const user = await findByEmail(email);
+    if (!user) return false;
+    const isTruePass = await isRightPassword(password, user.password);
+    if (isTruePass) return user;
+    return false;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
+
+const UserDao = {
+  findAll,
+  create,
+  findById,
+  deleteById,
+  updateUser,
+  findByUsername,
+  findByEmail,
+  login,
+};
 module.exports = UserDao;

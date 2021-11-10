@@ -1,27 +1,16 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
-const Users = [
-  { id: 1, username: "emre", password: "123456" },
-  { id: 2, username: "emir", password: "123" },
-];
+const { login } = require("../../user/User.service");
 
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "username",
+      usernameField: "email",
       passwordField: "password",
     },
-    function (username, password, done) {
-      const user = Users.find((user) => user.username === username);
-      if (!user) {
-        console.log("user not found");
-        return done(null, false, { message: "Incorrect username." });
-      }
-      if (user.password !== password) {
-        console.log("password mismatch");
-        return done(null, false, { message: "Incorrect Password." });
-      }
+    function (email, password, done) {
+      const user = await login(email, password);
+      if (!user) return done(null, false, { message: "User not found." });
       return done(null, user);
     }
   )

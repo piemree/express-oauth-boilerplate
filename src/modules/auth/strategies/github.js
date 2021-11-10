@@ -1,5 +1,5 @@
 const githubStrategy = require("passport-github2").Strategy;
-const { githubKeys } = require("../../../../configs");
+const { githubKeys } = require("../../../configs");
 const passport = require("passport");
 const User = require("../../user/User.model");
 
@@ -18,6 +18,7 @@ passport.use(
         const newUser = await User.create({
           githubId: profile.id,
           username: profile.username,
+          email: profile._json.email,
         });
         return cb(null, newUser);
       } catch (error) {

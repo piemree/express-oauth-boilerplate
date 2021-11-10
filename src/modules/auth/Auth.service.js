@@ -1,7 +1,7 @@
 const { findByUsername } = require("../user/User.service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { JwtPrivateKey } = require("../../configs");
+const { JwtPrivateKey } = require("@/configs");
 const expiresIn = 36000;
 
 module.exports.generateToken = async (user) => {
