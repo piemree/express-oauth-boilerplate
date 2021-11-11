@@ -1,7 +1,10 @@
 const passport = require("passport");
 const User = require("../../user/User.model");
+
+//Initialize the strategies
 require("./google");
 require("./github");
+require("./local");
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);

@@ -1,4 +1,5 @@
 const User = require("./User.model");
+const _ = require("lodash");
 const { hashedPassword, isRightPassword } = require("../../utils/bcrypt");
 
 async function findAll() {
@@ -27,7 +28,8 @@ async function create(username, email, password) {
     email: email,
     password: await hashedPassword(password),
   };
-  return await User.create(newUser);
+  const user = await User.create(newUser);
+  return _.omit(user.dataValues, "password");
 }
 
 function updateUser(user, id) {
@@ -42,7 +44,7 @@ async function login(email, password) {
     const user = await findByEmail(email);
     if (!user) return false;
     const isTruePass = await isRightPassword(password, user.password);
-    if (isTruePass) return user;
+    if (isTruePass) return user.dataValues;
     return false;
   } catch (error) {
     return Promise.reject(error);

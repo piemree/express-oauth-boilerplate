@@ -8,7 +8,7 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-    function (email, password, done) {
+    async function (email, password, done) {
       const user = await login(email, password);
       if (!user) return done(null, false, { message: "User not found." });
       return done(null, user);

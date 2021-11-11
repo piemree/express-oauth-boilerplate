@@ -19,7 +19,14 @@ async function startApp() {
     console.log("Database connection error: " + err.message);
   }
 
-  app.use(cors({ origin: "http://localhost:8000", credentials: true }));
+  app.use(
+    cors({
+      origin: "http://localhost:8000",
+      credentials: true,
+      methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+    })
+  );
+
   app.use(cookieParser(sessionSecret));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
