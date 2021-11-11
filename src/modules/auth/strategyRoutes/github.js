@@ -1,5 +1,5 @@
 const passport = require("passport");
-module.exports = (router) => {
+module.exports = (router, redirectUrl) => {
   router.get(
     "/github",
     passport.authenticate("github", {
@@ -13,7 +13,7 @@ module.exports = (router) => {
     }),
     function (req, res) {
       req.session.save(() => {
-        res.redirect("http://localhost:8000");
+        res.redirect(redirectUrl);
       });
     }
   );

@@ -5,6 +5,8 @@ const User = require("../../user/User.model");
 require("./google");
 require("./github");
 require("./local");
+//require("./twitter");
+//require("./jwt");
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
