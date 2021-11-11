@@ -60,10 +60,15 @@ async function resetPassword(id, newPassword, newPassword2) {
   if (newPassword !== newPassword2)
     return Promise.reject("Passwords does not match");
 
-  const user = await findById(id);
-  const password = await hashedPassword(newPassword);
-  await user.update({ password: password });
-  return await user.save();
+  try {
+    const user = await findById(id);
+    if (!user) return Promise.reject("User does not exist");
+    const password = await hashedPassword(newPassword);
+    await user.update({ password: password });
+    return await user.save();
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
 }
 
 const UserDao = {

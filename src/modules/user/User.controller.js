@@ -22,7 +22,7 @@ router.post("/reset-password", async (req, res) => {
   const { newPassword, newPassword2 } = req.body;
   try {
     await resetPassword(userId, newPassword, newPassword2);
-    res.status(200).json({ message: "Password updated" });
+    res.status(200).send("Password updated successfully");
   } catch (error) {
     res.status(404).send(error);
   }
