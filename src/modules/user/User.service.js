@@ -32,11 +32,6 @@ async function create(username, email, password) {
   return _.omit(user.dataValues, "password");
 }
 
-async function findOneAndUpdatePassword(id, password) {
-  const hashedPassword = await hashedPassword(password);
-  console.log(hashedPassword);
-  return await User.update({ password: hashedPassword }, { where: { id: id } });
-}
 function updateUser(user, id) {
   const updateUser = {
     username: user.username,
@@ -56,22 +51,19 @@ async function login(email, password) {
   }
 }
 
-async function resetPassword(id, newPassword, newPassword2) {
-  if (newPassword !== newPassword2)
-    return Promise.reject("Passwords does not match");
-
+async function resetPassword(id, password) {
   try {
     const user = await findById(id);
     if (!user) return Promise.reject("User does not exist");
-    const password = await hashedPassword(newPassword);
-    await user.update({ password: password });
+    const hpassword = await hashedPassword(password);
+    await user.update({ password: hpassword });
     return await user.save();
   } catch (error) {
     return Promise.reject(error.message);
   }
 }
 
-const UserDao = {
+module.exports = {
   findAll,
   create,
   findById,
@@ -82,4 +74,3 @@ const UserDao = {
   login,
   resetPassword,
 };
-module.exports = UserDao;

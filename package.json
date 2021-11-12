@@ -1,14 +1,15 @@
 {
-  "name": "chat-express-server",
+  "name": "express-oauth-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "Basic express postgresql with local jwt google twitter github oauth provider.",
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js "
   },
-  "author": "",
-  "license": "ISC",
+  "author": "piemree",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
@@ -26,7 +27,8 @@
     "passport-twitter": "^1.0.4",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.8.0"
+    "sequelize": "^6.8.0",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.14"
